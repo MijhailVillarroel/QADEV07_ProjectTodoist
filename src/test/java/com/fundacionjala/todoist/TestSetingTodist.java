@@ -36,6 +36,7 @@ public class TestSetingTodist {
     @Test
     public void testEditProject() {
         toolBar.clickSetingTodoist();
+        login.defauldFrame();
         TodoistSettingAccount todoistSettingAccount = toolBar.clickTodoistSettingMenu();
         toolBar.swichtIFrame();
         todoistSettingAccount.clickListOptionsTab();
