@@ -16,11 +16,11 @@ public class TestLogin {
     public void testLogin() {
         TodoistHome todoistHome = new TodoistHome();
         Login login = todoistHome.clickLogInLink();
-        login.swichtIFrame();
+     //   login.swichtIFrame();
         login.setEmailTestField(EMAIL);
         login.setPasswordTestField(PASSWORD);
         Inbox inbox = login.clickLogInButton();
         final String expectResult = "Inbox";
-        assertEquals(expectResult, inbox.getNameTest());
+        assertEquals(expectResult, inbox.getSideBar().getTitlePageInbox());
     }
 }

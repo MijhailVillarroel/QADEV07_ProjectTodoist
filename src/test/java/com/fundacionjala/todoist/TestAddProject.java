@@ -29,10 +29,11 @@ public class TestAddProject {
 
     @Test
     public void testAddProjectNew() {
-        final String nameProject = "Test";
-        inbox.clicklinkCreateProject();
-        inbox.setNameProjectTestField(nameProject);
-        inbox.clickAddProjectButton();
-        assertEquals(nameProject, inbox.getNameTest());
+        SideBar sideBar = inbox.getSideBar();
+        final String expectedValue = "TestP01";
+        sideBar.clickLinkCreateProject();
+        sideBar.setNameProjectTestField(expectedValue);
+        ProjectContainer projectContainer = sideBar.clickAddProjectButton();
+        assertEquals(expectedValue, projectContainer.getProjectNameLabel());
     }
 }

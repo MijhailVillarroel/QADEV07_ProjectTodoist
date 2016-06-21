@@ -1,7 +1,10 @@
 package com.fundacionjala.todoist;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Mijhail on 19/06/2016.
@@ -12,7 +15,10 @@ public class TestEditProject {
 
     public static final String PASSWORD = "P4ssw0rd";
 
-    private Inbox inbox;
+    private SideBar sideBar;
+
+    public static final String PROJECT_NAME = "TestP01";
+
 
     @Before
     public void setUp() {
@@ -21,16 +27,34 @@ public class TestEditProject {
         login.swichtIFrame();
         login.setEmailTestField(EMAIL);
         login.setPasswordTestField(PASSWORD);
-        inbox = login.clickLogInButton();
+        Inbox inbox = login.clickLogInButton();
         login.defauldFrame();
+        sideBar = inbox.getSideBar();
+        sideBar.clickLinkCreateProject();
+        sideBar.setNameProjectTestField(PROJECT_NAME);
+        sideBar.clickAddProjectButton();
     }
 
     @Test
-    public void testAddProjectNew() {
-        ItemsMenu itemsMenu = inbox.clickProjectSelectMenu();
+    public void testEditProject() {
+        ItemsMenu itemsMenu = sideBar.clickProjectSelectMenuLeft(PROJECT_NAME);
         itemsMenu.clickEditProjectMenuItem();
-    //    final String nameSetProject = "Play";
-      //  inbox.setNameProjectTestField(nameSetProject);
-       // Assert.assertEquals(nameSetProject, inbox.getNameTest());
+        final String newProjectName = "Play3";
+        sideBar.setNameProjectTestField(newProjectName);
+        ProjectContainer projectContainer = sideBar.clickAddProjectButton();
+        assertEquals(newProjectName, projectContainer.getProjectNameLabel());
+    }
+
+    @Test
+    public void testDeleteProject() {
+        //trabajar con varios metodos
+        ItemsMenu itemsMenu = sideBar.clickProjectSelectMenuLeft(PROJECT_NAME);
+        itemsMenu.clickDeleteProjectMenuItem();
+        //assertEquals(newProjectName, projectContainer.getProjectNameLabel());
+    }
+
+    @After
+    public void cleanUp(){
+
     }
 }

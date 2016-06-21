@@ -14,7 +14,7 @@ public class DriverManager {
 
     private WebDriver driver;
 
-    private static final int TIMEOUT_NORMAL = 15;
+    public static final int TIMEOUT_NORMAL = 15;
 
     private DriverManager () {
         initWebDriver();

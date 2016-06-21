@@ -36,7 +36,8 @@ public class Login extends BaseClass{
     }
 
     public void swichtIFrame(){
-        switchToIFrame(iFrameLogIn);
+        final String nameIDFrame = "GB_frame";
+        switchToIFrame(nameIDFrame,nameIDFrame);
     }
 
 //    public static Inbox loginAS(String email, String password) {
