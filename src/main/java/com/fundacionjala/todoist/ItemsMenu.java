@@ -8,16 +8,14 @@ import org.openqa.selenium.support.FindBy;
  */
 public class ItemsMenu extends BaseClass {
 
-    @FindBy(xpath = "html/body/div[5]/table/tbody/tr[4]/td")
+    @FindBy(xpath = "//span[text()='Edit project']")
     private WebElement editProjectMenuItem;
 
     @FindBy(id = "menu_delete_text")
     private WebElement deleteProjectMenuItem;
 
-    @FindBy(css = "//tr[4]/td/div/span")
-    private WebElement clickDeleteOKButton;
 
-    @FindBy(xpath = ".//*[@id='project_list']/li[2]/form/table[1]/tbody/tr/td[1]/table/tbody/tr/td/div[2]")
+    @FindBy(xpath = "//span[text()=Edit project]")
     private WebElement editProjectTestField;
 
 
@@ -25,17 +23,15 @@ public class ItemsMenu extends BaseClass {
        editProjectMenuItem.click();
     }
 
-
     public void setNameProjectTestField(String nameProject) {
         editProjectTestField.clear();
         editProjectTestField.sendKeys(nameProject);
     }
 
-    public void clickDeleteProjectMenuItem() {
+    public DeleteAlertBox clickDeleteProjectMenuItem() {
         deleteProjectMenuItem.click();
+        return new DeleteAlertBox();
     }
 
-    public void  clickClickDeleteOKButton() {
-        clickDeleteOKButton.click();
-    }
+
 }

@@ -18,19 +18,13 @@ public class TestAddProject {
 
     @Before
     public void setUp() {
-        TodoistHome todoistHome = new TodoistHome();
-        Login login = todoistHome.clickLogInLink();
-        login.swichtIFrame();
-        login.setEmailTestField(EMAIL);
-        login.setPasswordTestField(PASSWORD);
-        inbox = login.clickLogInButton();
-        login.defauldFrame();
+        inbox = Login.loginAsPrimaryUser();
     }
 
     @Test
     public void testAddProjectNew() {
         SideBar sideBar = inbox.getSideBar();
-        final String expectedValue = "TestP01";
+        final String expectedValue = "Test3";
         sideBar.clickLinkCreateProject();
         sideBar.setNameProjectTestField(expectedValue);
         ProjectContainer projectContainer = sideBar.clickAddProjectButton();

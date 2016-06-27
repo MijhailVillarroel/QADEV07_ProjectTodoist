@@ -4,57 +4,52 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Created by Mijhail on 19/06/2016.
  */
 public class TestEditProject {
 
-    public static final String EMAIL = "mija.villa@gmail.com";
-
-    public static final String PASSWORD = "P4ssw0rd";
+    public static final String PROJECT_NAME = "TestP01";
 
     private SideBar sideBar;
 
-    public static final String PROJECT_NAME = "TestP01";
+    private Inbox inbox;
+    public static final String NEW_PROJECT_NAME = "Play3";
 
 
     @Before
     public void setUp() {
-        TodoistHome todoistHome = new TodoistHome();
-        Login login = todoistHome.clickLogInLink();
-        login.swichtIFrame();
-        login.setEmailTestField(EMAIL);
-        login.setPasswordTestField(PASSWORD);
-        Inbox inbox = login.clickLogInButton();
-        login.defauldFrame();
+        inbox = Login.loginAsPrimaryUser();
         sideBar = inbox.getSideBar();
         sideBar.clickLinkCreateProject();
         sideBar.setNameProjectTestField(PROJECT_NAME);
         sideBar.clickAddProjectButton();
+        sideBar.clickProjectSelectMenuLeft(PROJECT_NAME);
     }
 
     @Test
     public void testEditProject() {
-        ItemsMenu itemsMenu = sideBar.clickProjectSelectMenuLeft(PROJECT_NAME);
+        ItemsMenu itemsMenu = sideBar.clickSubMenu(PROJECT_NAME);
         itemsMenu.clickEditProjectMenuItem();
-        final String newProjectName = "Play3";
-        sideBar.setNameProjectTestField(newProjectName);
+        sideBar.setNameProjectTestField(NEW_PROJECT_NAME);
         ProjectContainer projectContainer = sideBar.clickAddProjectButton();
-        assertEquals(newProjectName, projectContainer.getProjectNameLabel());
+        assertEquals(NEW_PROJECT_NAME, projectContainer.getProjectNameLabel());
     }
 
-    @Test
-    public void testDeleteProject() {
-        //trabajar con varios metodos
-        ItemsMenu itemsMenu = sideBar.clickProjectSelectMenuLeft(PROJECT_NAME);
-        itemsMenu.clickDeleteProjectMenuItem();
-        //assertEquals(newProjectName, projectContainer.getProjectNameLabel());
-    }
+//    @Test
+//    public void testDeleteProject() {
+//        ItemsMenu itemsMenu = sideBar.clickSubMenu(PROJECT_NAME);
+//        DeleteAlertBox deleteAlertBox = itemsMenu.clickDeleteProjectMenuItem();
+//        inbox = deleteAlertBox.clickOkBtn();
+//        assertTrue("Project Exist",inbox.getSideBar().projecteExistsinList(PROJECT_NAME));
+//    }
 
     @After
     public void cleanUp(){
-
+        ItemsMenu itemsMenu = sideBar.clickLeftProject(NEW_PROJECT_NAME);
+        DeleteAlertBox deleteAlertBox = itemsMenu.clickDeleteProjectMenuItem();
+        inbox = deleteAlertBox.clickOkBtn();
     }
 }

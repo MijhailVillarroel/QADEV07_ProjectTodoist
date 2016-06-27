@@ -2,7 +2,10 @@ package com.fundacionjala.todoist;
 
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 /**
@@ -10,7 +13,7 @@ import org.openqa.selenium.support.FindBy;
  */
 public class SideBar extends BaseClass{
 
-    @FindBy(css = ".action.sel_add_project")
+    @FindBy(xpath = "//a[contains(@class,'project')]")
     private WebElement linkCreateProject;
 
     @FindBy(css = ".richtext_editor.sel_richtext_editor")
@@ -38,15 +41,42 @@ public class SideBar extends BaseClass{
         return new ProjectContainer();
     }
 
-    public ItemsMenu clickProjectSelectMenuLeft(String projectName) {
-      //  System.out.println(ListMenuProjects.size());
+    public ProjectContainer clickProjectSelectMenuLeft(String projectName) {
+
         for (WebElement projectMenuItem: ListMenuProjects) {
             if (projectName.equalsIgnoreCase(projectMenuItem.getText())) {
                 projectMenuItem.click();
-                projectsSubMenuItem.get(ListMenuProjects.indexOf(projectMenuItem)).click();
+            }
+        }
+        return  new ProjectContainer();
+    }
+
+    public ItemsMenu clickLeftProject(String projectName) {
+System.out.print(ListMenuProjects.size());
+        for (WebElement projectMenuItem: ListMenuProjects) {
+            if (projectName.equalsIgnoreCase(projectMenuItem.getText())) {
+                Action rightClick = new Actions(driver)
+                        .contextClick(projectMenuItem).build();
+                rightClick.perform();
             }
         }
         return  new ItemsMenu();
+    }
+
+    public ItemsMenu clickSubMenu(String projectName) {
+        //span[text()="test36"]
+       // wait.until(ExpectedConditions.visibilityOfAllElements(ListMenuProjects));
+        WebElement taskElement = driver.findElement(By.xpath("//span[text()='" + projectName + "']"));
+
+        Action rightClick = new Actions(driver)
+                .contextClick(taskElement).build();
+        rightClick.perform();
+        return new ItemsMenu();
+    }
+
+    public Boolean projecteExistsinList(String projectName) {
+        By project = By.xpath("//span[text()='" + projectName + "']");
+        return CommonMethod.isElementPresent(driver.findElement(project));
     }
 
     public void setNameProjectTestField(String nameProject) {
